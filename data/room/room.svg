@@ -1,0 +1,231 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1000 650" width="100%" height="100%" class="room-schematic-svg" id="roomSvg">
+  <defs>
+    <!-- Soft background glow filters -->
+    <filter id="warmGlow" x="-50%" y="-50%" width="200%" height="200%">
+      <feGaussianBlur stdDeviation="8" result="blur1" />
+      <feGaussianBlur stdDeviation="16" result="blur2" />
+      <feMerge>
+        <feMergeNode in="blur2" />
+        <feMergeNode in="blur1" />
+        <feMergeNode in="SourceGraphic" />
+      </feMerge>
+    </filter>
+
+    <filter id="rgbGlow" x="-50%" y="-50%" width="200%" height="200%">
+      <feGaussianBlur stdDeviation="6" result="blur1" />
+      <feGaussianBlur stdDeviation="14" result="blur2" />
+      <feGaussianBlur stdDeviation="22" result="blur3" />
+      <feMerge>
+        <feMergeNode in="blur3" />
+        <feMergeNode in="blur2" />
+        <feMergeNode in="blur1" />
+        <feMergeNode in="SourceGraphic" />
+      </feMerge>
+    </filter>
+
+    <!-- Linear Gradients for 3D room surfaces -->
+    <linearGradient id="wallBackGrad" x1="0" y1="0" x2="0" y2="1">
+      <stop offset="0%" stop-color="#141416" />
+      <stop offset="100%" stop-color="#0c0c0e" />
+    </linearGradient>
+
+    <linearGradient id="wallLeftGrad" x1="0" y1="0" x2="1" y2="0">
+      <stop offset="0%" stop-color="#101012" />
+      <stop offset="100%" stop-color="#18181b" />
+    </linearGradient>
+
+    <linearGradient id="floorGrad" x1="0" y1="0" x2="0" y2="1">
+      <stop offset="0%" stop-color="#0e0e10" />
+      <stop offset="100%" stop-color="#070709" />
+    </linearGradient>
+
+    <linearGradient id="deskGrad" x1="0" y1="0" x2="1" y2="1">
+      <stop offset="0%" stop-color="#242429" />
+      <stop offset="100%" stop-color="#18181c" />
+    </linearGradient>
+
+    <linearGradient id="bedGrad" x1="0" y1="0" x2="1" y2="1">
+      <stop offset="0%" stop-color="#1e1e24" />
+      <stop offset="100%" stop-color="#131317" />
+    </linearGradient>
+
+    <!-- Dynamic RGB Gradient (manipulated via CSS/JS) -->
+    <linearGradient id="dynamicRgbGradient" x1="0" y1="0" x2="0" y2="1">
+      <stop offset="0%" stop-color="#ff0077" class="rgb-stop-1" />
+      <stop offset="50%" stop-color="#00f0ff" class="rgb-stop-2" />
+      <stop offset="100%" stop-color="#7928ca" class="rgb-stop-3" />
+    </linearGradient>
+  </defs>
+
+  <!-- Architectural Background Grid -->
+  <g class="room-grid" stroke="rgba(255,255,255,0.03)" stroke-width="1">
+    <line x1="120" y1="80" x2="120" y2="520" />
+    <line x1="880" y1="80" x2="880" y2="520" />
+    <line x1="120" y1="520" x2="880" y2="520" />
+    <!-- Floor perspective lines -->
+    <line x1="120" y1="520" x2="30" y2="620" />
+    <line x1="380" y1="520" x2="330" y2="620" />
+    <line x1="620" y1="520" x2="670" y2="620" />
+    <line x1="880" y1="520" x2="970" y2="620" />
+  </g>
+
+  <!-- Room Walls Geometry -->
+  <g class="room-structure">
+    <!-- Left Wall -->
+    <polygon points="40,30 140,80 140,520 40,590" fill="url(#wallLeftGrad)" stroke="rgba(255,255,255,0.05)" stroke-width="1" />
+    <!-- Back Wall -->
+    <polygon points="140,80 860,80 860,520 140,520" fill="url(#wallBackGrad)" stroke="rgba(255,255,255,0.07)" stroke-width="1" />
+    <!-- Floor -->
+    <polygon points="40,590 140,520 860,520 960,590" fill="url(#floorGrad)" stroke="rgba(255,255,255,0.04)" stroke-width="1" />
+    <!-- Right Wall / Alcove Outline -->
+    <polygon points="860,80 960,30 960,590 860,520" fill="#0d0d0f" stroke="rgba(255,255,255,0.05)" stroke-width="1" />
+    <!-- Ceiling Line -->
+    <line x1="40" y1="30" x2="140" y2="80" stroke="rgba(255,255,255,0.08)" stroke-width="1.5" />
+    <line x1="140" y1="80" x2="860" y2="80" stroke="rgba(255,255,255,0.08)" stroke-width="1.5" />
+    <line x1="860" y1="80" x2="960" y2="30" stroke="rgba(255,255,255,0.08)" stroke-width="1.5" />
+  </g>
+
+  <!-- Furniture Context (PC Setup, Desk, Bed) -->
+  <g class="furniture-context" opacity="0.85">
+    <!-- PC Desk (Left/Center Back) -->
+    <g class="desk-setup">
+      <!-- Desk Tabletop -->
+      <polygon points="200,380 520,380 500,450 180,450" fill="url(#deskGrad)" stroke="rgba(255,255,255,0.12)" stroke-width="1.5" />
+      <!-- Desk Legs -->
+      <line x1="185" y1="450" x2="185" y2="540" stroke="#1f1f24" stroke-width="5" stroke-linecap="round" />
+      <line x1="495" y1="450" x2="495" y2="540" stroke="#1f1f24" stroke-width="5" stroke-linecap="round" />
+      <!-- Desk Modesty / Under Shelf -->
+      <polygon points="200,395 490,395 480,440 210,440" fill="#121215" opacity="0.6" />
+
+      <!-- Main Monitor -->
+      <rect x="300" y="270" width="130" height="85" rx="4" fill="#151518" stroke="rgba(255,255,255,0.18)" stroke-width="1.5" />
+      <rect x="306" y="276" width="118" height="73" rx="2" fill="#09090b" />
+      <!-- Monitor Stand -->
+      <path d="M360,355 L370,355 L373,380 L357,380 Z" fill="#282830" />
+      <!-- Keyboard & Mousepad -->
+      <polygon points="280,410 440,410 435,435 275,435" fill="#1b1b20" stroke="rgba(255,255,255,0.06)" />
+      <rect x="305" y="415" width="85" height="15" rx="2" fill="#2a2a33" />
+      <!-- PC Case Tower at Left Desk Corner -->
+      <polygon points="210,290 255,275 255,370 210,380" fill="#1a1a20" stroke="rgba(255,255,255,0.15)" stroke-width="1" />
+      <polygon points="255,275 275,285 275,375 255,370" fill="#141418" stroke="rgba(255,255,255,0.1)" stroke-width="1" />
+    </g>
+
+    <!-- Bed Area (Right Wall) -->
+    <g class="bed-setup">
+      <!-- Bed Headboard -->
+      <polygon points="650,330 840,300 840,450 650,480" fill="#16161b" stroke="rgba(255,255,255,0.1)" stroke-width="1" />
+      <!-- Bed Mattress & Frame -->
+      <polygon points="560,450 830,410 880,510 590,560" fill="url(#bedGrad)" stroke="rgba(255,255,255,0.12)" stroke-width="1.5" />
+      <!-- Pillows -->
+      <polygon points="670,365 745,350 760,390 685,405" fill="#272730" rx="4" />
+      <polygon points="755,348 830,333 845,373 770,388" fill="#272730" rx="4" />
+    </g>
+  </g>
+
+  <!-- ================================================================= -->
+  <!-- LIGHTING SEGMENTS (INTERACTIVE SVGS)                             -->
+  <!-- ================================================================= -->
+
+  <!-- SEGMENT 1: Left Wall / Ceiling Run (WARM WHITE RELAY) -->
+  <g class="segment-group" id="group-segment-1" data-segment="1" data-type="relay" tabindex="0" role="button" aria-label="Segment 1 Left Wall">
+    <!-- Glow halo (active when on) -->
+    <path d="M48,45 L135,90 L135,510" class="segment-glow segment-glow-1" fill="none" stroke="#FFE0A3" stroke-width="20" opacity="0" filter="url(#warmGlow)" />
+    <!-- Physical track -->
+    <path d="M48,45 L135,90 L135,510" class="segment-path segment-relay" id="segment-1" fill="none" stroke="#333338" stroke-width="7" stroke-linecap="round" stroke-linejoin="round" />
+    <!-- Interactive Hit Area (Larger for touch friendliness) -->
+    <path d="M48,45 L135,90 L135,510" class="segment-hitbox" fill="none" stroke="transparent" stroke-width="36" stroke-linecap="round" />
+    <!-- Segment Label Badge -->
+    <g class="segment-badge" transform="translate(65, 80)">
+      <rect x="-16" y="-12" width="32" height="24" rx="6" class="badge-bg" fill="#17171a" stroke="rgba(255,255,255,0.15)" stroke-width="1" />
+      <text x="0" y="4" text-anchor="middle" class="badge-text">01</text>
+    </g>
+  </g>
+
+  <!-- SEGMENT 2: Main Back-Wall Horizontal Lighting Run (WARM WHITE RELAY) -->
+  <g class="segment-group" id="group-segment-2" data-segment="2" data-type="relay" tabindex="0" role="button" aria-label="Segment 2 Back Wall Main">
+    <!-- Glow halo -->
+    <line x1="150" y1="92" x2="680" y2="92" class="segment-glow segment-glow-2" stroke="#FFE0A3" stroke-width="22" opacity="0" filter="url(#warmGlow)" stroke-linecap="round" />
+    <!-- Physical track -->
+    <line x1="150" y1="92" x2="680" y2="92" class="segment-path segment-relay" id="segment-2" stroke="#333338" stroke-width="7" stroke-linecap="round" />
+    <!-- Interactive Hit Area -->
+    <line x1="150" y1="92" x2="680" y2="92" class="segment-hitbox" stroke="transparent" stroke-width="38" stroke-linecap="round" />
+    <!-- Segment Label Badge -->
+    <g class="segment-badge" transform="translate(415, 70)">
+      <rect x="-16" y="-12" width="32" height="24" rx="6" class="badge-bg" fill="#17171a" stroke="rgba(255,255,255,0.15)" stroke-width="1" />
+      <text x="0" y="4" text-anchor="middle" class="badge-text">02</text>
+    </g>
+  </g>
+
+  <!-- UNLIT HANGING WIRE: Visible between back-wall lighting and right-side lighting (NOT A LIGHT, UNCLICKABLE) -->
+  <g class="hanging-wire-group" id="hanging-wire-group" pointer-events="none">
+    <!-- Curved hanging wire with catenary sag -->
+    <path d="M680,92 Q720,135 750,110" class="hanging-wire-path" id="hanging-wire" fill="none" stroke="#60606a" stroke-width="2" stroke-dasharray="5,4" opacity="0.6" />
+    <!-- Wire note label -->
+    <text x="735" y="145" class="hanging-wire-label" text-anchor="middle" fill="#666675" font-size="10" font-family="Inter, sans-serif" letter-spacing="0.5">HANGING WIRE (UNLIT)</text>
+  </g>
+
+  <!-- SEGMENT 3: VERTICAL RGB LIGHT at PC Corner (ADDRESSABLE RGB STRIP) -->
+  <g class="segment-group segment-group-rgb" id="group-segment-3" data-segment="3" data-type="rgb" tabindex="0" role="button" aria-label="Segment 3 PC Corner RGB Strip">
+    <!-- RGB multi-layer Glow halo -->
+    <line x1="205" y1="100" x2="205" y2="375" class="segment-glow segment-glow-3" stroke="url(#dynamicRgbGradient)" stroke-width="24" opacity="0" filter="url(#rgbGlow)" stroke-linecap="round" />
+    <!-- Physical Addressable Strip with pixel ticks -->
+    <line x1="205" y1="100" x2="205" y2="375" class="segment-path segment-rgb" id="segment-3" stroke="url(#dynamicRgbGradient)" stroke-width="8" stroke-linecap="round" />
+    <!-- Interactive Hit Area -->
+    <line x1="205" y1="100" x2="205" y2="375" class="segment-hitbox" stroke="transparent" stroke-width="36" stroke-linecap="round" />
+    <!-- Segment Label Badge -->
+    <g class="segment-badge rgb-badge" transform="translate(205, 230)">
+      <rect x="-18" y="-12" width="36" height="24" rx="6" class="badge-bg rgb-badge-bg" fill="#17171a" stroke="#00f0ff" stroke-width="1.5" />
+      <text x="0" y="4" text-anchor="middle" class="badge-text rgb-badge-text" fill="#00f0ff" font-weight="700">03</text>
+    </g>
+  </g>
+
+  <!-- SEGMENT 4: Small horizontal light behind monitor area (WARM WHITE RELAY) -->
+  <g class="segment-group" id="group-segment-4" data-segment="4" data-type="relay" tabindex="0" role="button" aria-label="Segment 4 Behind Monitor">
+    <!-- Glow halo -->
+    <line x1="305" y1="262" x2="425" y2="262" class="segment-glow segment-glow-4" stroke="#FFE0A3" stroke-width="18" opacity="0" filter="url(#warmGlow)" stroke-linecap="round" />
+    <!-- Physical track -->
+    <line x1="305" y1="262" x2="425" y2="262" class="segment-path segment-relay" id="segment-4" stroke="#333338" stroke-width="6" stroke-linecap="round" />
+    <!-- Interactive Hit Area -->
+    <line x1="305" y1="262" x2="425" y2="262" class="segment-hitbox" stroke="transparent" stroke-width="32" stroke-linecap="round" />
+    <!-- Segment Label Badge -->
+    <g class="segment-badge" transform="translate(365, 240)">
+      <rect x="-16" y="-12" width="32" height="24" rx="6" class="badge-bg" fill="#17171a" stroke="rgba(255,255,255,0.15)" stroke-width="1" />
+      <text x="0" y="4" text-anchor="middle" class="badge-text">04</text>
+    </g>
+  </g>
+
+  <!-- SEGMENT 5: LED strip underneath desk/table facing downward (WARM WHITE RELAY) -->
+  <g class="segment-group" id="group-segment-5" data-segment="5" data-type="relay" tabindex="0" role="button" aria-label="Segment 5 Under Table">
+    <!-- Downward spread Glow halo -->
+    <polygon points="190,448 495,448 510,510 175,510" class="segment-glow segment-glow-5" fill="#FFE0A3" opacity="0" filter="url(#warmGlow)" />
+    <!-- Physical track under table rim -->
+    <line x1="195" y1="448" x2="490" y2="448" class="segment-path segment-relay" id="segment-5" stroke="#333338" stroke-width="6" stroke-linecap="round" />
+    <!-- Interactive Hit Area -->
+    <line x1="195" y1="448" x2="490" y2="448" class="segment-hitbox" stroke="transparent" stroke-width="34" stroke-linecap="round" />
+    <!-- Segment Label Badge -->
+    <g class="segment-badge" transform="translate(340, 475)">
+      <rect x="-16" y="-12" width="32" height="24" rx="6" class="badge-bg" fill="#17171a" stroke="rgba(255,255,255,0.15)" stroke-width="1" />
+      <text x="0" y="4" text-anchor="middle" class="badge-text">05</text>
+    </g>
+  </g>
+
+  <!-- SEGMENT 6: Right wall / Bed Area (WARM WHITE RELAY) -->
+  <g class="segment-group" id="group-segment-6" data-segment="6" data-type="relay" tabindex="0" role="button" aria-label="Segment 6 Right Wall Bed Area">
+    <!-- Glow halo -->
+    <path d="M750,110 L855,100 L855,420" class="segment-glow segment-glow-6" fill="none" stroke="#FFE0A3" stroke-width="20" opacity="0" filter="url(#warmGlow)" />
+    <!-- Physical track -->
+    <path d="M750,110 L855,100 L855,420" class="segment-path segment-relay" id="segment-6" fill="none" stroke="#333338" stroke-width="7" stroke-linecap="round" stroke-linejoin="round" />
+    <!-- Interactive Hit Area -->
+    <path d="M750,110 L855,100 L855,420" class="segment-hitbox" fill="none" stroke="transparent" stroke-width="36" stroke-linecap="round" />
+    <!-- Segment Label Badge -->
+    <g class="segment-badge" transform="translate(865, 260)">
+      <rect x="-16" y="-12" width="32" height="24" rx="6" class="badge-bg" fill="#17171a" stroke="rgba(255,255,255,0.15)" stroke-width="1" />
+      <text x="0" y="4" text-anchor="middle" class="badge-text">06</text>
+    </g>
+  </g>
+
+  <!-- Compass / Room Orientation Legend -->
+  <g class="room-legend" transform="translate(50, 600)">
+    <text x="0" y="0" fill="#555562" font-size="11" font-family="Inter, sans-serif" letter-spacing="1">INTERACTIVE ROOM SCHEMATIC &bull; 6 LIGHT ZONES</text>
+  </g>
+</svg>
